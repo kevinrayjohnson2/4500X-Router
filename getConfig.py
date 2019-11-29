@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
+from tkinter import *
+window = Tk()
+window.geometry("400x400")
+window.title("Build Routing Config")
 
+
+
+submitbutton =Button(window, text="Submit",fg="white",bg='black', relief="groove", font=("arial",12))
+submitbutton.place(x=110,y=110)
+window.mainloop()
 #Build out building vlans.
 
 
