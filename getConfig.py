@@ -1,14 +1,41 @@
 #!/usr/bin/env python3
 from tkinter import *
-window = Tk()
-window.geometry("400x400")
-window.title("Build Routing Config")
+from tkinter import ttk
+import sys
 
 
+root = Tk()
+root.title("Vlan Config Helper")
+content = ttk.Frame(root, padding=(3,3,12,12))
+frame = ttk.Frame(content, borderwidth=5, relief="sunken", width=200, height=100)
+bvlidlbl = ttk.Label(content, text="Enter Building Vlan")
+buildingvlanid = ttk.Entry(content)
 
-submitbutton =Button(window, text="Submit",fg="white",bg='black', relief="groove", font=("arial",12))
-submitbutton.place(x=110,y=110)
-window.mainloop()
+def closeWindow():
+    exit()
+
+ok = ttk.Button(content, text="Okay")
+ok.invoke()
+
+cancel = ttk.Button(content, text="Cancel")
+cancel.invoke()
+
+content.grid(column=0, row=0, sticky=(N, S, E, W))
+frame.grid(column=0, row=0, columnspan=3, rowspan=2, sticky=(N, S, E, W))
+bvlidlbl.grid(column=3, row=0, columnspan=2, sticky=(N, W), padx=5)
+buildingvlanid.grid(column=3, row=1, columnspan=2, sticky=(N, E, W), pady=5, padx=5)
+ok.grid(column=3, row=3)
+cancel.grid(column=4, row=3)
+
+root.columnconfigure(0, weight=1)
+root.rowconfigure(0, weight=1)
+content.columnconfigure(0, weight=3)
+content.columnconfigure(1, weight=3)
+content.columnconfigure(2, weight=3)
+content.columnconfigure(3, weight=1)
+content.columnconfigure(4, weight=1)
+content.rowconfigure(1, weight=1)
+root.mainloop()
 #Build out building vlans.
 
 
@@ -75,9 +102,9 @@ class Camerarouting:
     pass
 
 
-buildingroute = BuildingRouting.from_input()
+#buildingroute = BuildingRouting.from_input()
 
-BuildingRouting.buildingroutingvlan(buildingroute)
+#BuildingRouting.buildingroutingvlan(buildingroute)
 
 
 
