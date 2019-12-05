@@ -10,11 +10,11 @@ content = ttk.Frame(root, padding=(10,10,120,120))
 
 # Set all Entry Vars as empty strings
 
-buildingsubnet =''
-buildingdes = ''
-buildingvlanip =''
-buildingvlanid =''
-buildinggateway =''
+# buildingsubnet =''
+# buildingdes = ''
+# buildingvlanip =''
+# buildingvlanid =''
+# buildinggateway =''
 
 
 # Build out the form
@@ -23,48 +23,39 @@ bdes = ttk.Entry(content)
 
 bvlidlbl = ttk.Label(content, text="Enter Building Vlan Id: ")
 bvlanid = ttk.Entry(content)
-#buildingvlanid = bvlanid.get()
 
 bvliplbl = ttk.Label(content, text="Enter Building Vlan IP: ")
 bvlanip = ttk.Entry(content)
-#buildingvlanip = bvlanip.get()
 
 bvlsnlbl = ttk.Label(content, text="Enter Building Vlan subnet: ")
 bsubnet = ttk.Entry(content)
-#buildingsubnet = bsubnet.get()
 
 bvlgwlbl = ttk.Label(content, text="Enter Building Vlan gateway: ")
 bgateway = ttk.Entry(content)
-#buildinggateway = bgateway.get()
 
+#Clear the text boxes
 def clear(): 
-    #Clear the text boxes
     bdes.delete(0, END) 
     bvlanid.delete(0, END) 
     bvlanip.delete(0, END)
     bsubnet.delete(0, END) 
     bgateway.delete(0, END) 
 
-
+#Exit on cancel
 def closeWindow():
     exit()
 
-
-
-
-
+#Form Input Conditional
 def from_input():
+    # Vailidate Entries
     if (bdes.get() == "" and
         bvlanid.get() == "" and 
         bvlanip.get() == "" and
         bsubnet.get() == "" and
         bgateway.get() == ""):
-
+        # Print if feild not vaild
         print("Enter all fields")
     else:
-
-        print("the entry is: " + bdes.get())
-      
 
         with open("mycommands.txt", "w") as f:
             f.write('interface Vlan ' + bdes.get() + '\n')
@@ -84,6 +75,7 @@ def from_input():
             f.write(' shutdowm\n')
             f.close()
 
+        clear()
 
 submit = ttk.Button(content, text="Submit", command=from_input)
 
@@ -126,9 +118,3 @@ content.rowconfigure(1, weight=1)
 
 
 root.mainloop()
-
-
-
-
-
-
