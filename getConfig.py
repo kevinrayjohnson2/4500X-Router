@@ -83,9 +83,6 @@ def from_input():
             f.write(' ip ospf xxxx area 1.2.3.4\n')
             f.write(' shutdowm\n')
             f.close()
-    
-
-
 
 
 submit = ttk.Button(content, text="Submit", command=from_input)
@@ -129,8 +126,6 @@ content.rowconfigure(1, weight=1)
 
 
 root.mainloop()
-
-
 
 
 
