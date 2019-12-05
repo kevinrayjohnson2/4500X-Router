@@ -8,54 +8,69 @@ root = Tk()
 root.title("Vlan Config Helper")
 content = ttk.Frame(root, padding=(10,10,120,120))
 
+buildingsubnet =''
+buildingdes =''
+buildingvlanip =''
+buildingvlanid =''
+buildinggateway =''
+
+
 # Build out the form
 bvldeslbl = ttk.Label(content, text="Enter Building Vlan Description: ")
-buildingdes = ttk.Entry(content)
+bdes = ttk.Entry(content, textvariable=buildingdes)
+#buildingdes = bdes.get()
 
 bvlidlbl = ttk.Label(content, text="Enter Building Vlan Id: ")
-buildingvlanid = ttk.Entry(content)
+bvlanid = ttk.Entry(content, textvariable=buildingvlanid)
+#buildingvlanid = bvlanid.get()
 
 bvliplbl = ttk.Label(content, text="Enter Building Vlan IP: ")
-buildingvlanip = ttk.Entry(content)
+bvlanip = ttk.Entry(content, textvariable=buildingvlanip)
+#buildingvlanip = bvlanip.get()
 
 bvlsnlbl = ttk.Label(content, text="Enter Building Vlan subnet: ")
-buildingsubnet = ttk.Entry(content)
+bsubnet = ttk.Entry(content, textvariable=buildingsubnet)
+#buildingsubnet = bsubnet.get()
 
 bvlgwlbl = ttk.Label(content, text="Enter Building Vlan gateway: ")
-buildinggateway = ttk.Entry(content)
+bgateway = ttk.Entry(content, textvariable=buildinggateway)
+#buildinggateway = bgateway.get()
+
+
 
 
 def closeWindow():
     exit()
 
-ok = ttk.Button(content, text="Okay" )
+BuildingRouting.from_input = ['buildingsubnet', 'buildingdes', 'buildingvlanip', 'buildingvlanid', 'buildinggateway']
 
+
+submit = ttk.Button(content, text="Submit", command=BuildingRouting.from_input())
 
 #Cancel Button Works ----- dont invoke the function...
 cancel =ttk.Button(content, text="Cancel", command=closeWindow)
 # Do not Change
 
 
-
 #setting up the Grid
 content.grid(column=0, row=0, sticky=(N, S, E, W))
 
 bvldeslbl.grid(column=1, row=1, columnspan=1, sticky=(N, W), padx=5)
-buildingdes.grid(column=2, row=1, columnspan=2, sticky=(N, S, E, W), pady=5, padx=5)
+bdes.grid(column=2, row=1, columnspan=2, sticky=(N, S, E, W), pady=5, padx=5)
 
 bvlidlbl.grid(column=1, row=2, columnspan=1, sticky=(N, W), padx=5)
-buildingvlanid.grid(column=2, row=2, columnspan=2, sticky=(N, S, E, W), pady=5, padx=5)
+bvlanid.grid(column=2, row=2, columnspan=2, sticky=(N, S, E, W), pady=5, padx=5)
 
 bvliplbl.grid(column=1, row=3, columnspan=1, sticky=(N, W), padx=5)
-buildingvlanip.grid(column=2, row=3, columnspan=2, sticky=(N, S, E, W), pady=5, padx=5)
+bvlanip.grid(column=2, row=3, columnspan=2, sticky=(N, S, E, W), pady=5, padx=5)
 
 bvlsnlbl.grid(column=1, row=4, columnspan=1, sticky=(N, W), padx=5)
-buildingsubnet.grid(column=2, row=4, columnspan=2, sticky=(N, S, E, W), pady=5, padx=5)
+bsubnet.grid(column=2, row=4, columnspan=2, sticky=(N, S, E, W), pady=5, padx=5)
 
 bvlgwlbl.grid(column=1, row=5, columnspan=1, sticky=(N, W), padx=5)
-buildinggateway.grid(column=2, row=5, columnspan=2, sticky=(N, S, E, W), pady=5, padx=5)
+bgateway.grid(column=2, row=5, columnspan=2, sticky=(N, S, E, W), pady=5, padx=5)
 
-ok.grid(column=3, row=6)
+submit.grid(column=3, row=6)
 cancel.grid(column=4, row=6)
 
 root.columnconfigure(0, weight=1)
@@ -68,7 +83,7 @@ content.columnconfigure(4, weight=3)
 content.columnconfigure(5, weight=3)
 content.columnconfigure(6, weight=3)
 content.rowconfigure(1, weight=1)
-root.mainloop()
+
 #Build out building vlans.
 
 
@@ -91,7 +106,7 @@ class BuildingRouting:
             f.write(' no ip redirects\n')
             f.write(' ip pim passive\n')
             f.write(' standby version 2\n')
-            f.write(' standby ' + self.buildingvlanid + ' ip ' + self.Housebuildinggateway + '\n')
+            f.write(' standby ' + self.buildingvlanid + ' ip ' + self.buildinggateway + '\n')
             f.write(' standby ' + self.buildingvlanid + ' priority 250\n')
             f.write(' standby ' + self.buildingvlanid + ' preempt\n')
             f.write(' standby ' + self.buildingvlanid + ' authentication md5 key-string nice-auth\n')
@@ -99,18 +114,15 @@ class BuildingRouting:
             f.write(' shutdowm\n')
             f.close()
 
-    # @classmethod
-    # def from_input(cls):
-    #     return cls(
-    #         buildingdes = input('Enter Building Description: '),
-    #         buildingvlanid = input('Enter Building VLAN: '),
-    #         buildingvlanip = input('Please enter the building vlan IP:'),
-    #         buildingsubnet = input('Please enter the building subnet:'),
-    #         buildinggateway = input('Please enter the building gateway:')
-     #   )
-
-
-
+    @classmethod
+    def from_input(cls):
+        return cls(
+            buildingdes = bdes.get(),
+            buildingvlanid = bvlanid.get(),
+            buildingvlanip = bvlanip.get(),
+            buildingsubnet = bsubnet.get(),
+            buildinggateway = bgateway.get()
+       )
 
 
 # class Buildingvoip:
@@ -135,10 +147,15 @@ class Camerarouting:
     pass
 
 
-buildingroute = BuildingRouting()
 
-#BuildingRouting.buildingroutingvlan(buildingroute)
 
+print =(BuildingRouting.buildingroutingvlan())
+
+
+
+
+
+root.mainloop()
 
 
 
